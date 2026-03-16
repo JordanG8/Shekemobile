@@ -27,6 +27,16 @@ export default async function handler(req, res) {
         VALUES (${JSON.stringify(items)}, ${total}, ${note || ''})
         RETURNING id, items, total, note, created_at;
       `;
+
+      // Fire-and-forget webhook to Google Sheets
+      if (process.env.SHEETS_WEBHOOK_URL) {
+        fetch(process.env.SHEETS_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...row, items: Array.isArray(row.items) ? row.items : JSON.parse(row.items) }),
+        }).catch(err => console.error('Sheets webhook error:', err));
+      }
+
       return res.status(201).json(row);
     }
 

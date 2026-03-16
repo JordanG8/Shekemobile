@@ -174,10 +174,10 @@ function CartTab({ onOrderSaved, searchQuery }) {
       )}
 
       {/* Category Tabs */}
-      <div className="flex overflow-x-auto bg-white p-2 border-b sticky top-[108px] z-10 gap-2 scrollbar-hide">
+      <div className="flex overflow-x-auto bg-white px-4 py-3 border-b sticky top-[108px] z-10 gap-3 scrollbar-hide">
         {CATEGORIES.map(cat => (
           <button key={cat} onClick={() => setActiveCategory(cat)}
-            className={`px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium transition-colors ${
+            className={`px-5 py-2.5 rounded-full whitespace-nowrap text-sm font-medium transition-colors ${
               activeCategory === cat ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'
             }`}>
             {cat}
@@ -186,7 +186,7 @@ function CartTab({ onOrderSaved, searchQuery }) {
       </div>
 
       {/* Product List */}
-      <main className="p-4 grid grid-cols-1 gap-3">
+      <main className="p-4 grid grid-cols-1 gap-4">
         {filteredProducts.map(product => (
           <div key={product.id}
             className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
@@ -196,14 +196,14 @@ function CartTab({ onOrderSaved, searchQuery }) {
             </div>
             <div className="flex items-center gap-3">
               {cart[product.id] ? (
-                <div className="flex items-center bg-blue-50 rounded-lg p-1">
+                <div className="flex items-center bg-blue-50 rounded-lg p-1.5 gap-1">
                   <button onClick={() => removeFromCart(product.id)}
-                    className="p-1 text-blue-600 hover:bg-blue-100 rounded">
+                    className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg">
                     <Minus className="w-5 h-5" />
                   </button>
-                  <span className="w-8 text-center font-bold text-blue-700">{cart[product.id].quantity}</span>
+                  <span className="w-10 text-center font-bold text-blue-700">{cart[product.id].quantity}</span>
                   <button onClick={() => addToCart(product)}
-                    className="p-1 text-blue-600 hover:bg-blue-100 rounded">
+                    className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg">
                     <Plus className="w-5 h-5" />
                   </button>
                 </div>
@@ -222,13 +222,13 @@ function CartTab({ onOrderSaved, searchQuery }) {
       </main>
 
       {/* Floating Bottom Summary */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-2xl flex items-center justify-between z-20">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t px-6 py-4 shadow-2xl flex items-center justify-between z-20">
         <div>
           <p className="text-sm text-gray-500">סה&quot;כ לתשלום:</p>
           <p className="text-2xl font-bold text-blue-600">₪{fmt(totalAmount)}</p>
         </div>
         <button onClick={() => setIsCartOpen(true)} disabled={totalItems === 0}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${
+          className={`flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold transition-all ${
             totalItems > 0 ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
           }`}>
           סיכום ({totalItems})
@@ -276,7 +276,7 @@ function CartTab({ onOrderSaved, searchQuery }) {
                 <span>סה&quot;כ סופי:</span>
                 <span className="text-blue-600">₪{fmt(totalAmount)}</span>
               </div>
-              <div className="flex gap-2 mb-2">
+              <div className="flex gap-3 mb-3">
                 <button onClick={clearCart}
                   className="flex-1 border border-red-500 text-red-500 py-3 rounded-xl font-bold flex items-center justify-center gap-2">
                   <Trash2 className="w-5 h-5" /> נקה הכל
@@ -288,7 +288,7 @@ function CartTab({ onOrderSaved, searchQuery }) {
                 </button>
               </div>
               <button onClick={() => setIsCartOpen(false)}
-                className="w-full border border-gray-300 text-gray-600 py-2 rounded-xl text-sm">
+                className="w-full border border-gray-300 text-gray-600 py-3 rounded-xl text-sm font-medium">
                 המשך קנייה
               </button>
             </div>
@@ -409,17 +409,17 @@ function HistoryTab() {
                     </p>
                   )}
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                   <button onClick={() => { setEditingId(isEditing ? null : order.id); setEditNote(order.note || ''); }}
-                    className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                    className="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                     <Edit3 className="w-4 h-4" />
                   </button>
                   <button onClick={() => deleteOrder(order.id)} disabled={deletingId === order.id}
-                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-40">
+                    className="p-2.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-40">
                     <Trash2 className="w-4 h-4" />
                   </button>
                   <button onClick={() => setExpandedId(isExpanded ? null : order.id)}
-                    className="p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                    className="p-2.5 text-gray-400 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
                     {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
                 </div>
@@ -494,15 +494,15 @@ export default function App() {
         </div>
 
         {/* Tab switcher */}
-        <div className="flex gap-2 mb-3">
+        <div className="flex gap-3 mb-3">
           <button onClick={() => setActiveTab('cart')}
-            className={`flex-1 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+            className={`flex-1 py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all ${
               activeTab === 'cart' ? 'bg-white text-blue-700' : 'bg-blue-500 text-white'
             }`}>
             <ShoppingCart className="w-4 h-4" /> הזמנה חדשה
           </button>
           <button onClick={switchToHistory}
-            className={`flex-1 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+            className={`flex-1 py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all ${
               activeTab === 'history' ? 'bg-white text-blue-700' : 'bg-blue-500 text-white'
             }`}>
             <Clock className="w-4 h-4" /> היסטוריה
@@ -513,11 +513,11 @@ export default function App() {
         {activeTab === 'cart' && (
           <div className="relative">
             <input type="text" placeholder="חפש מוצר..."
-              className="w-full p-2 pr-10 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="w-full p-3 pr-10 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-300"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
             />
-            <Search className="absolute right-3 top-2.5 text-gray-400 w-5 h-5" />
+            <Search className="absolute right-3 top-3.5 text-gray-400 w-5 h-5" />
           </div>
         )}
       </header>

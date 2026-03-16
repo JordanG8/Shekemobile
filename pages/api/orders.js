@@ -1,8 +1,48 @@
-import { getDb, initDb } from '../../lib/db';
+import {
+  getDb,
+  hasDb,
+  initDb,
+  memAddOrder,
+  memDeleteOrder,
+  memGetOrders,
+  memUpdateOrder,
+} from '../../lib/db';
 
 export default async function handler(req, res) {
   try {
-    await initDb(); // ensures table exists on first request
+    await initDb(); // no-op when POSTGRES_URL is not set
+
+    // ── In-memory fallback (no POSTGRES_URL configured) ──────────────────────
+    if (!hasDb()) {
+      if (req.method === 'GET') {
+        return res.status(200).json(memGetOrders());
+      }
+      if (req.method === 'POST') {
+        const { items, total, note } = req.body;
+        if (!items || total == null) {
+          return res.status(400).json({ error: 'Missing items or total' });
+        }
+        return res.status(201).json(memAddOrder({ items, total, note }));
+      }
+      if (req.method === 'PUT') {
+        const { id } = req.query;
+        if (!id) return res.status(400).json({ error: 'Missing id' });
+        const row = memUpdateOrder(id, req.body);
+        if (!row) return res.status(404).json({ error: 'Order not found' });
+        return res.status(200).json(row);
+      }
+      if (req.method === 'DELETE') {
+        const { id } = req.query;
+        if (!id) return res.status(400).json({ error: 'Missing id' });
+        const ok = memDeleteOrder(id);
+        if (!ok) return res.status(404).json({ error: 'Order not found' });
+        return res.status(200).json({ success: true });
+      }
+      res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
+      return res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+
+    // ── Postgres path ─────────────────────────────────────────────────────────
     const sql = getDb();
 
     // GET /api/orders — return all orders sorted newest first

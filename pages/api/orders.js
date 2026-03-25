@@ -7,25 +7,35 @@ export default async function handler(req, res) {
 
     // GET /api/orders — return all orders sorted newest first
     if (req.method === 'GET') {
-      const rows = await sql`
-        SELECT id, items, total, note, created_at
-        FROM orders
-        ORDER BY created_at DESC
-        LIMIT 200;
-      `;
+      const { trip_id } = req.query;
+      let query;
+      if (trip_id) {
+        query = sql`SELECT id, trip_id, items, total, note, created_at FROM orders WHERE trip_id = ${trip_id} ORDER BY created_at DESC;`;
+      } else {
+        query = sql`SELECT id, trip_id, items, total, note, created_at FROM orders ORDER BY created_at DESC LIMIT 200;`;
+      }
+      const rows = await query;
       return res.status(200).json(rows);
     }
 
     // POST /api/orders — save a new completed order
     if (req.method === 'POST') {
-      const { items, total, note } = req.body;
+      const { items, total, note, trip_id } = req.body;
       if (!items || total == null) {
         return res.status(400).json({ error: 'Missing items or total' });
       }
+      
+      // If trip_id is missing, try to find active trip
+      let finalTripId = trip_id;
+      if (!finalTripId) {
+        const [activeTrip] = await sql`SELECT id FROM trips WHERE status = 'active' ORDER BY start_time DESC LIMIT 1;`;
+        finalTripId = activeTrip?.id || null;
+      }
+
       const [row] = await sql`
-        INSERT INTO orders (items, total, note)
-        VALUES (${JSON.stringify(items)}, ${total}, ${note || ''})
-        RETURNING id, items, total, note, created_at;
+        INSERT INTO orders (items, total, note, trip_id)
+        VALUES (${JSON.stringify(items)}, ${total}, ${note || ''}, ${finalTripId})
+        RETURNING id, trip_id, items, total, note, created_at;
       `;
 
       // Fire-and-forget webhook to Google Sheets

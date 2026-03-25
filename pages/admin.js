@@ -538,7 +538,7 @@ export default function AdminPage() {
   // Use simple check for demo purposes, in production use actual auth
   const handleLogin = (e) => {
     e.preventDefault();
-    if (password === '1234') { // Simple password as requested
+    if (password === 'Amnon531') { // Updated password
       setIsLoggedIn(true);
       localStorage.setItem('admin_auth', 'true');
     } else {

@@ -526,14 +526,31 @@ export default function App() {
 
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap');
-        body { font-family: 'Rubik', sans-serif; -webkit-tap-highlight-color: transparent; color: #1a1a1a; }
+        
+        :root {
+          --rubik: 'Rubik', sans-serif;
+        }
+
+        body { 
+          font-family: var(--rubik); 
+          -webkit-tap-highlight-color: transparent; 
+          color: #1a1a1a; 
+          background-color: #fcfcfc;
+        }
+
+        input, button, select, textarea {
+          font-family: var(--rubik) !important;
+        }
+
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        
         @keyframes slide-up {
           from { transform: translateY(20px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
         .animate-slide-up { animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(-10px); }
           to { opacity: 1; transform: translateY(0); }

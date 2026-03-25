@@ -679,7 +679,21 @@ export default function AdminPage() {
       
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap');
-        body { font-family: 'Rubik', sans-serif; background-color: #fcfcfc; }
+        
+        :root {
+          --rubik: 'Rubik', sans-serif;
+        }
+
+        body { 
+          font-family: var(--rubik); 
+          background-color: #fcfcfc; 
+          color: #1a1a1a;
+        }
+
+        input, button, select, textarea {
+          font-family: var(--rubik) !important;
+        }
+
         .animate-shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
           10%, 90% { transform: translate3d(-1px, 0, 0); }

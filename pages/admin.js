@@ -21,35 +21,38 @@ function Sidebar({ activeTab, setActiveTab, onLogout }) {
   ];
 
   return (
-    <div className="w-64 bg-black text-yellow-400 h-screen sticky top-0 flex flex-col border-l border-yellow-900/30">
-      <div className="p-6 border-b border-yellow-900/30">
-        <h1 className="text-2xl font-black tracking-tighter">שק"מ נייד</h1>
-        <p className="text-xs text-yellow-600 mt-1 uppercase tracking-widest">Admin Panel</p>
+    <div className="w-72 bg-black text-white h-screen sticky top-0 flex flex-col border-l border-white/5">
+      <div className="p-8 border-b border-white/5">
+        <div className="bg-yellow-400 text-black w-12 h-12 rounded-2xl flex items-center justify-center mb-4 rotate-3 shadow-[0_0_20px_rgba(250,204,21,0.2)]">
+          <ShoppingBag size={24} className="stroke-[2.5]" />
+        </div>
+        <h1 className="text-2xl font-black tracking-tight text-yellow-400">שק"מ נייד</h1>
+        <p className="text-[10px] text-gray-500 mt-1 uppercase font-black tracking-[0.2em]">ממשק ניהול</p>
       </div>
       
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-6 space-y-3">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-bold ${
+            className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300 font-bold ${
               activeTab === tab.id 
-                ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' 
-                : 'hover:bg-yellow-900/20 text-yellow-600'
+                ? 'bg-yellow-400 text-black shadow-xl shadow-yellow-400/10 scale-[1.02]' 
+                : 'hover:bg-white/5 text-gray-500 hover:text-white'
             }`}
           >
-            <tab.icon size={20} />
-            {tab.label}
+            <tab.icon size={20} className={activeTab === tab.id ? 'stroke-[2.5]' : 'stroke-[2]'} />
+            <span className="text-sm tracking-wide">{tab.label}</span>
           </button>
         ))}
       </nav>
 
-      <div className="p-4 border-t border-yellow-900/30">
+      <div className="p-6 border-t border-white/5">
         <button 
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-500/10 font-bold transition-all"
+          className="w-full flex items-center gap-4 px-5 py-4 rounded-2xl text-red-400 hover:bg-red-400/10 font-black transition-all text-sm uppercase tracking-wider"
         >
-          <LogOut size={20} />
+          <LogOut size={20} className="stroke-[2.5]" />
           התנתקות
         </button>
       </div>
@@ -623,28 +626,28 @@ export default function AdminPage() {
 
             <div className="grid grid-cols-4 gap-6">
               {[
-                { label: 'הזמנות היום', value: '24', icon: ShoppingBag, color: 'bg-blue-500' },
-                { label: 'הכנסות היום', value: '₪1,240', icon: LayoutDashboard, color: 'bg-green-500' },
-                { label: 'נסיעות החודש', value: '18', icon: Truck, color: 'bg-purple-500' },
-                { label: 'מוצרים חסרים', value: '3', icon: AlertCircle, color: 'bg-red-500' },
+                { label: 'הזמנות היום', value: '24', icon: ShoppingBag, color: 'bg-black' },
+                { label: 'הכנסות היום', value: '₪1,240', icon: LayoutDashboard, color: 'bg-black' },
+                { label: 'נסיעות החודש', value: '18', icon: Truck, color: 'bg-black' },
+                { label: 'מוצרים חסרים', value: '3', icon: AlertCircle, color: 'bg-black' },
               ].map((stat, i) => (
-                <div key={i} className="bg-white p-6 rounded-3xl border-2 border-black shadow-sm group hover:border-yellow-400 transition-all">
-                  <div className={`${stat.color} text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <stat.icon size={24} />
+                <div key={i} className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm group hover:border-yellow-400 transition-all duration-300">
+                  <div className={`${stat.color} text-yellow-400 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-lg shadow-black/5`}>
+                    <stat.icon size={28} className="stroke-[2]" />
                   </div>
-                  <p className="text-xs font-black text-gray-400 uppercase tracking-widest">{stat.label}</p>
-                  <p className="text-3xl font-black text-black mt-1">{stat.value}</p>
+                  <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">{stat.label}</p>
+                  <p className="text-3xl font-black text-black mt-2 tracking-tight">{stat.value}</p>
                 </div>
               ))}
             </div>
 
             <div className="grid grid-cols-2 gap-8">
-              <div className="bg-black text-yellow-400 p-8 rounded-[40px] relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-400/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-                <h3 className="text-2xl font-black mb-4 relative z-10">ניהול מלאי מהיר</h3>
-                <p className="text-yellow-600 font-bold mb-6 relative z-10">עדכן מחירים ושמות מוצרים בתוך שניות כדי שהרכב יוכל להמשיך למכור.</p>
+              <div className="bg-black text-white p-10 rounded-[48px] relative overflow-hidden group border-4 border-black">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-yellow-400/10 rounded-full -mr-40 -mt-40 blur-3xl group-hover:bg-yellow-400/20 transition-all duration-500"></div>
+                <h3 className="text-3xl font-black mb-4 relative z-10 text-yellow-400">ניהול מלאי מהיר</h3>
+                <p className="text-gray-400 font-medium mb-8 relative z-10 leading-relaxed max-w-sm">עדכן מחירים ושמות מוצרים בתוך שניות כדי שהרכב יוכל להמשיך למכור.</p>
                 <div className="flex gap-4 relative z-10">
-                  <button onClick={() => setActiveTab('products')} className="bg-yellow-400 text-black px-8 py-3 rounded-xl font-black hover:scale-105 transition-all">לניהול מוצרים</button>
+                  <button onClick={() => setActiveTab('products')} className="bg-yellow-400 text-black px-10 py-4 rounded-2xl font-black hover:scale-105 transition-all shadow-xl shadow-yellow-400/10">לניהול מוצרים</button>
                   <button 
                     onClick={async () => {
                       if(confirm('האם לייבא את רשימת המוצרים הראשונית?')) {
@@ -653,17 +656,17 @@ export default function AdminPage() {
                         alert(data.message || 'בוצע!');
                       }
                     }} 
-                    className="border-2 border-yellow-400/30 text-yellow-400 px-8 py-3 rounded-xl font-black hover:bg-yellow-400 hover:text-black transition-all"
+                    className="border-2 border-white/10 text-white px-10 py-4 rounded-2xl font-black hover:bg-white/5 transition-all"
                   >
-                    ייבוא מוצרים ראשוני
+                    ייבוא ראשוני
                   </button>
                 </div>
               </div>
-              <div className="bg-yellow-400 text-black p-8 rounded-[40px] relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-black/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-                <h3 className="text-2xl font-black mb-4 relative z-10">דוחות ורווחים</h3>
-                <p className="text-yellow-800 font-bold mb-6 relative z-10">הפק דוחות PDF מעוצבים לכל נסיעה כדי לעקוב אחרי הרווחים והמלאי.</p>
-                <button onClick={() => setActiveTab('reports')} className="bg-black text-yellow-400 px-8 py-3 rounded-xl font-black hover:scale-105 transition-all relative z-10">לצפייה בדוחות</button>
+              <div className="bg-yellow-400 text-black p-10 rounded-[48px] relative overflow-hidden group border-4 border-yellow-400 shadow-xl shadow-yellow-400/10">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-black/5 rounded-full -mr-40 -mt-40 blur-3xl group-hover:bg-black/10 transition-all duration-500"></div>
+                <h3 className="text-3xl font-black mb-4 relative z-10">דוחות ורווחים</h3>
+                <p className="text-black/60 font-medium mb-8 relative z-10 leading-relaxed max-w-sm">הפק דוחות PDF מעוצבים לכל נסיעה כדי לעקוב אחרי הרווחים והמלאי.</p>
+                <button onClick={() => setActiveTab('reports')} className="bg-black text-yellow-400 px-10 py-4 rounded-2xl font-black hover:scale-105 transition-all shadow-xl shadow-black/10">לצפייה בדוחות</button>
               </div>
             </div>
           </div>
@@ -675,8 +678,8 @@ export default function AdminPage() {
       </main>
       
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap');
-        body { font-family: 'Heebo', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap');
+        body { font-family: 'Rubik', sans-serif; background-color: #fcfcfc; }
         .animate-shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
         @keyframes shake {
           10%, 90% { transform: translate3d(-1px, 0, 0); }

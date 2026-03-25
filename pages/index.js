@@ -112,11 +112,13 @@ function CartTab({ onOrderSaved, searchQuery, products, activeTrip }) {
       )}
 
       {/* Category Tabs */}
-      <div className="flex overflow-x-auto bg-white px-4 py-3 border-b sticky top-[108px] z-10 gap-3 scrollbar-hide border-black/5">
+      <div className="flex overflow-x-auto bg-white/80 backdrop-blur-md px-4 py-4 border-b sticky top-[124px] sm:top-[128px] z-20 gap-3 scrollbar-hide border-gray-100">
         {categories.map(cat => (
           <button key={cat} onClick={() => setActiveCategory(cat)}
-            className={`px-6 py-2.5 rounded-xl whitespace-nowrap text-sm font-black transition-all border-2 ${
-              activeCategory === cat ? 'bg-black text-yellow-400 border-black' : 'bg-gray-50 text-gray-400 border-transparent hover:border-gray-200'
+            className={`px-6 py-3 rounded-2xl whitespace-nowrap text-sm font-black transition-all duration-300 border-2 ${
+              activeCategory === cat 
+                ? 'bg-black text-yellow-400 border-black shadow-lg shadow-black/5' 
+                : 'bg-gray-50 text-gray-400 border-transparent hover:border-gray-200 hover:text-gray-600'
             }`}>
             {cat}
           </button>
@@ -461,55 +463,61 @@ export default function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
       </Head>
       
-      {/* Header */}
-      <header className="bg-black text-yellow-400 p-6 sticky top-0 z-30 shadow-2xl border-b-4 border-yellow-400">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-             <div className="bg-yellow-400 text-black p-2 rounded-xl shadow-lg rotate-3">
-               <ShoppingCart className="w-6 h-6" />
+      <header className="bg-black text-white p-6 sticky top-0 z-30 shadow-2xl border-b-[3px] border-yellow-400">
+        <div className="flex items-center justify-between mb-8 max-w-2xl mx-auto">
+          <div className="flex items-center gap-4">
+             <div className="bg-yellow-400 text-black p-2.5 rounded-2xl shadow-[0_0_20px_rgba(250,204,21,0.3)] rotate-3">
+               <ShoppingCart className="w-6 h-6 stroke-[2.5]" />
              </div>
-             <h1 className="text-3xl font-black tracking-tighter">שק"מ נייד</h1>
+             <h1 className="text-3xl font-black tracking-tight text-yellow-400">שק"מ נייד</h1>
           </div>
           {activeTrip && (
-            <div className="bg-yellow-400/10 px-4 py-1.5 rounded-full border border-yellow-400/20 flex items-center gap-2">
-              <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
-              <span className="text-[10px] font-black uppercase tracking-wider opacity-60">נסיעה פעילה:</span>
-              <span className="text-xs font-black">{activeTrip.name}</span>
+            <div className="bg-yellow-400/10 px-4 py-2 rounded-xl border border-yellow-400/20 flex items-center gap-3">
+              <span className="flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-2.5 w-2.5 rounded-full bg-yellow-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-400"></span>
+              </span>
+              <span className="text-[11px] font-black uppercase tracking-widest text-yellow-400/80">נסיעה פעילה:</span>
+              <span className="text-sm font-bold text-white">{activeTrip.name}</span>
             </div>
           )}
         </div>
 
         {/* Tab switcher */}
-        <div className="flex gap-4 mb-2">
+        <div className="flex gap-4 mb-2 max-w-2xl mx-auto">
           <button onClick={() => setActiveTab('cart')}
-            className={`flex-1 py-4 rounded-2xl text-base font-black flex items-center justify-center gap-3 transition-all ${
-              activeTab === 'cart' ? 'bg-yellow-400 text-black shadow-xl scale-105' : 'bg-yellow-900/20 text-yellow-600'
+            className={`flex-1 py-4 rounded-2xl text-base font-black flex items-center justify-center gap-3 transition-all duration-300 ${
+              activeTab === 'cart' 
+                ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' 
+                : 'bg-white/5 text-gray-400 hover:bg-white/10'
             }`}>
-            <Plus className="w-5 h-5" /> הזמנה חדשה
+            <Plus className="w-5 h-5 stroke-[3]" /> הזמנה חדשה
           </button>
           <button onClick={switchToHistory}
-            className={`flex-1 py-4 rounded-2xl text-base font-black flex items-center justify-center gap-3 transition-all ${
-              activeTab === 'history' ? 'bg-yellow-400 text-black shadow-xl scale-105' : 'bg-yellow-900/20 text-yellow-600'
+            className={`flex-1 py-4 rounded-2xl text-base font-black flex items-center justify-center gap-3 transition-all duration-300 ${
+              activeTab === 'history' 
+                ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20' 
+                : 'bg-white/5 text-gray-400 hover:bg-white/10'
             }`}>
-            <Clock className="w-5 h-5" /> היסטוריה
+            <Clock className="w-5 h-5 stroke-[3]" /> היסטוריה
           </button>
         </div>
 
         {/* Search — only on cart tab */}
         {activeTab === 'cart' && (
-          <div className="relative mt-6 animate-fade-in">
+          <div className="relative mt-8 animate-fade-in max-w-2xl mx-auto">
             <input type="text" placeholder="חפש מוצר שמתחשק לך..."
-              className="w-full bg-white/5 border-2 border-yellow-900/20 p-4 pr-12 rounded-2xl text-yellow-400 placeholder:text-yellow-900/50 focus:outline-none focus:border-yellow-400 focus:bg-white/10 transition-all font-bold text-lg"
+              className="w-full bg-white/5 border-2 border-white/10 p-4.5 pr-14 rounded-2xl text-white placeholder:text-gray-500 focus:outline-none focus:border-yellow-400/50 focus:bg-white/10 transition-all font-bold text-lg"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
             />
-            <Search className="absolute right-4 top-5 text-yellow-900/50 w-6 h-6" />
+            <Search className="absolute right-5 top-5.5 text-gray-500 w-6 h-6 stroke-[2.5]" />
           </div>
         )}
       </header>
 
       {/* Tab content */}
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-2xl mx-auto px-4 sm:px-0">
         {activeTab === 'cart'
           ? <CartTab key="cart" searchQuery={searchQuery} onOrderSaved={switchToHistory} products={products} activeTrip={activeTrip} />
           : <HistoryTab key={historyKey} />
@@ -517,15 +525,15 @@ export default function App() {
       </div>
 
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap');
-        body { font-family: 'Heebo', sans-serif; -webkit-tap-highlight-color: transparent; }
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap');
+        body { font-family: 'Rubik', sans-serif; -webkit-tap-highlight-color: transparent; color: #1a1a1a; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         @keyframes slide-up {
-          from { transform: translateY(100%); }
-          to { transform: translateY(0); }
+          from { transform: translateY(20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
         }
-        .animate-slide-up { animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .animate-slide-up { animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(-10px); }
           to { opacity: 1; transform: translateY(0); }
